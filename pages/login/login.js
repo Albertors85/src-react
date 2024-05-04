@@ -1,29 +1,17 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { login } from "./service.js";
 import Layout from '../../components/layout/layout.js';
-import { AuthContext } from './context.js';
+import { useAuth } from './context.js';
 
 function LoginUser (){
-    const {onLogin}= useContext(AuthContext)
+
+    const {onLogin}= useAuth();
     const [formValue, setFormValue]= useState({
         username:'',
         password:''
         }
     );
-/*
-    const handlerChangeName=  event =>{
-        setFormValue(currentFormValue=>({
-            username: event.target.value,
-            password: currentFormValue.password
-        }));
-    };
 
-    const handlerChangePass=  event =>{
-        setFormValue({
-            username: formValue.username,
-            password: event.target.value
-        })
-    };*/
 
     const handlerChange = event =>{
         setFormValue(currentFormValues=>({

@@ -1,9 +1,8 @@
-import { useContext } from "react"
 import { logout } from "../../pages/login/service.js"
-import { AuthContext } from "../../pages/login/context.js"
+import { useAuth } from "../../pages/login/context.js";
 
 export default function Header(){
-    const {isLogged, onLogout} = useContext(AuthContext);
+    const {isLogged, onLogout} = useAuth();
 
     const handleLogout= async()=>{
         await logout()
