@@ -5,6 +5,7 @@ import App from './App';
 import storage from './util/storage.js';
 import { authHeader } from './api/client.js';
 import {AuthContextProvider} from './pages/login/context.js';
+import { BrowserRouter } from 'react-router-dom';
 
 const accessToken = storage.get('auth');
 if(accessToken){
@@ -15,10 +16,16 @@ if(accessToken){
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider isDefaultLogged={!!accessToken}>
-      <App/>
-    </AuthContextProvider>
+
+    <BrowserRouter>
+
+      <AuthContextProvider isDefaultLogged={!!accessToken}>
+        <App/>
+      </AuthContextProvider>
+      
+    </BrowserRouter>
     
+
   </React.StrictMode>
 );
 
