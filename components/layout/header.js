@@ -1,6 +1,7 @@
 import { logout } from "../../pages/login/service.js"
 import { useAuth } from "../../pages/login/context.js";
-
+import { Link, NavLink } from "react-router-dom";
+import { Fragment } from "react";
 export default function Header(){
     const {isLogged, onLogout} = useAuth();
 
@@ -10,9 +11,32 @@ export default function Header(){
     };
 
     return <header>
-        <div>icono<img></img></div>
+        <Link to="/">
+            <h3>inicio</h3>
+        </Link>
+        
         <nav>
-            {isLogged ?( <button onClick={handleLogout}>Logout</button>) : (<button >Login</button>)}
+        
+            {isLogged ?( 
+                <Fragment>
+                    <NavLink to="/">
+                    <button onClick={handleLogout}>Logout</button>
+                    </NavLink>
+                    
+                    
+                    <NavLink to="/adverts/new" end>
+                        <button> create</button>
+                    </NavLink>
+                        
+                    
+                </Fragment>
+                
+            
+            ) : ( 
+            <NavLink to="/login"> <button >Login</button>
+            </NavLink>
+            
+            )}
             
         </nav>
     </header>
