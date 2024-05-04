@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { login } from "./service.js";
 import Layout from '../../components/layout/layout.js';
 import { useAuth } from './context.js';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function LoginUser (){
-
+    const location = useLocation();
+    const navigate = useNavigate(); 
     const {onLogin}= useAuth();
+
     const [formValue, setFormValue]= useState({
         username:'',
         password:''
@@ -15,21 +18,24 @@ function LoginUser (){
 
     const handlerChange = event =>{
         setFormValue(currentFormValues=>({
-            ... currentFormValues,
+            ...currentFormValues,
             [event.target.name]:event.target.value,
         }));
-    }
+    };
 
    
     const handlerSubmit = async (event)=>{
         event.preventDefault();
 
-        const response = await login(formValue);
+        await login(formValue);
+       
         onLogin();
-      
-
+        
+        const goTo = location.state?.from || '/';
+        navigate(goTo);
     };
-    const {username, password}=formValue
+
+    const {username, password}=formValue;
     const buttonDisable =!username || !password;
 
     return (

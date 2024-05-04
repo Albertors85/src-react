@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { getAdverts } from "./services.js";
+
 import Layout from "../../components/layout/layout.js";
 
 function AdvertsPage(){
-
     
     const [adverts, setAdverts]= useState([]);
 
-    
+  
     useEffect(()=>{
         getAdverts().then(adverts => setAdverts(adverts))
     },[]);
     
     return (
-       <Layout title="hola">
+       <Layout>
             <div>
                 
                 <ul>

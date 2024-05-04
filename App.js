@@ -1,15 +1,14 @@
 import AdvertsPage from "./pages/Adverts/adverts.js";
 import LoginUser from "./pages/login/login.js";
 import NewAdvert from "./pages/Adverts/create-adverts.js";
-import { useAuth } from "./pages/login/context.js";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import AdvertPage from "./pages/Adverts/advert.js";
-
+import RequireAuth from "./pages/login/tools/require-auth.js";
 
 
 
 function App() {
-const {isLogged}= useAuth();
+
   
   return (
           <Routes>
@@ -21,7 +20,12 @@ const {isLogged}= useAuth();
 
               <Route index element={<AdvertsPage/>} />
               <Route path=":advertId" element={<AdvertPage/>} />
-              <Route path="new" element={<NewAdvert/>} />
+              <Route path="new" 
+                element={
+                  <RequireAuth>
+                    <NewAdvert/>
+                  </RequireAuth>
+                }/>
 
             </Route>
            

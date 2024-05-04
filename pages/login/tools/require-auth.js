@@ -1,9 +1,12 @@
 import { useAuth } from '../context.js';
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
-function RequireAuth (children){
+export default function RequireAuth ({children}){
+    const location = useLocation();
     const {isLogged} = useAuth();
-    return isLogged ? children : <Navigate to="/login"/> 
+
+    return isLogged ? (children ): 
+    (<Navigate to="/login" state={{ from: location.pathname}}/>)
 };
 
-export default RequireAuth;
+
