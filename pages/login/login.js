@@ -15,8 +15,6 @@ function LoginUser (){
         password:''
         }
     );
-
-
     const handlerChange = event =>{
         setFormValue(currentFormValues=>({
             ...currentFormValues,
@@ -24,12 +22,18 @@ function LoginUser (){
         }));
     };
 
+    const [memory, setMemory]=useState(false);
+
+    const handleMemory = event =>{
+        setMemory(event.target.checked)
+    }
+
    
     const handlerSubmit = async (event)=>{
         event.preventDefault();
         try{
             setIsFetching(true)
-            await login(formValue);
+            await login(formValue,memory);
             setIsFetching(false)
             onLogin();
             const goTo = location.state?.from || '/';
@@ -53,6 +57,10 @@ function LoginUser (){
                 <form onSubmit={handlerSubmit}>
                     <input type="text" name="username" value={username} onChange={handlerChange}/>
                     <input type="password" name="password" value={password} onChange={handlerChange}/>
+                    <br></br>
+                    <input type="checkbox" name="memory" checked={memory} onChange={handleMemory}/>
+                    <label>Desaeas ser recordado</label>
+                    <br></br>
                     <button type="submit" disabled={buttonDisable}>Log in</button>
                 </form>
                 {error &&  <div>{error.message}</div>}
