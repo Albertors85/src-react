@@ -16,16 +16,19 @@ function App() {
             <Route path="/" element={<Navigate to="/adverts"/>}/>
             <Route path="/login" element={<LoginUser/>} />
 
-            <Route path="/adverts" element={<Outlet/>}>
+           
+
+            <Route path="/adverts" element={
+              <RequireAuth>
+                <Outlet/>
+              </RequireAuth>
+            
+            
+            }>
 
               <Route index element={<AdvertsPage/>} />
               <Route path=":advertId" element={<AdvertPage/>} />
-              <Route path="new" 
-                element={
-                  <RequireAuth>
-                    <NewAdvert/>
-                  </RequireAuth>
-                }/>
+              <Route path="new" element={<NewAdvert/>}/>
 
             </Route>
            

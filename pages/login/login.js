@@ -8,7 +8,8 @@ function LoginUser (){
     const location = useLocation();
     const navigate = useNavigate(); 
     const {onLogin}= useAuth();
-
+    const [isFetching, setIsFetching]= useState(false);
+    const [error, setError]= useState(null);
     const [formValue, setFormValue]= useState({
         username:'',
         password:''
@@ -26,17 +27,24 @@ function LoginUser (){
    
     const handlerSubmit = async (event)=>{
         event.preventDefault();
+        try{
+            setIsFetching(true)
+            await login(formValue);
+            setIsFetching(false)
+            onLogin();
+            const goTo = location.state?.from || '/';
+            navigate(goTo);
 
-        await login(formValue);
-       
-        onLogin();
+
+        }catch(error){
+            setIsFetching(false)
+            setError(error)
+        }
         
-        const goTo = location.state?.from || '/';
-        navigate(goTo);
     };
 
     const {username, password}=formValue;
-    const buttonDisable =!username || !password;
+    const buttonDisable =!username || !password || isFetching;
 
     return (
         <Layout title="bienvenido">
@@ -47,6 +55,7 @@ function LoginUser (){
                     <input type="password" name="password" value={password} onChange={handlerChange}/>
                     <button type="submit" disabled={buttonDisable}>Log in</button>
                 </form>
+                {error &&  <div>{error.message}</div>}
             </div>
 
         </Layout>)

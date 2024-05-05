@@ -17,7 +17,9 @@ function AdvertsPage(){
             <div>
                 
                 <ul>
-                    {adverts.map(advert=> <li>{advert.name}</li>)}
+                    {adverts.map(({id, ...advert})=> 
+                    <li key={id}>
+                        {advert.price}</li>)}
                 </ul>
             </div>
 
